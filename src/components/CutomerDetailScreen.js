@@ -1,176 +1,226 @@
 import * as React from "react";
-import { Text, StyleSheet, View, Pressable,Dimensions,ScrollView } from "react-native";
-import Checkbox from 'expo-checkbox';
+import {
+  Text,
+  StyleSheet,
+  View,
+  Pressable,
+  Dimensions,
+  ScrollView,
+} from "react-native";
+import Checkbox from "expo-checkbox";
 import { Image } from "expo-image";
 import { useNavigation } from "@react-navigation/native";
-import { FontFamily, Color, FontSize, Border, Padding } from "../../GlobalStyles";
-import PieChart from 'react-native-pie-chart'
+import {
+  FontFamily,
+  Color,
+  FontSize,
+  Border,
+  Padding,
+} from "../../GlobalStyles";
+import PieChart from "react-native-pie-chart";
 
-const CutomerDetailScreen = ({data,partyDetails}) => {
-  console.log(">>> ",partyDetails)
+const CutomerDetailScreen = ({ data, partyDetails }) => {
+  console.log(">>> ", partyDetails);
   const navigation = useNavigation();
 
   return (
-    <View style={styles.cutomerdetailscreen}>
-      <View style={[styles.component4, styles.component4Layout]}>
-        <View style={[styles.component4Child, styles.component4Layout]} />
-        <View style={[styles.component4Item, styles.component4Layout]} />
-        <View style={[styles.arrowLeftParent, styles.timePosition]}>
-
-          <Text style={[styles.accountDetails, styles.textText]}>
-          20CUBE LOGISTICS PRIVATE LIMITED
-          </Text>
-        </View>
-      </View>
-      <View style={styles.groupParent}>
-      {
-        partyDetails.totals?.['Unpaid']?.outstanding_amount  || partyDetails.totals?.['Overdue']?.outstanding_amount
-        ? <PieChart
-        widthAndHeight={100}
-        series={[(partyDetails.totals?.['Unpaid']?.outstanding_amount || 0), (partyDetails.totals?.['Overdue']?.outstanding_amount || 0)]}
-        sliceColor={['gray', 'orange']}
-        coverRadius={0.45}
-        coverFill={'#FFF'}
-      /> : null
-      }
-        <View style={styles.groupContainer}>
-          <View style={[styles.rectangleParent, styles.rectanglePosition]}>
-            <View style={[styles.groupItem, styles.groupPosition]} />
-            <Text style={[styles.overdue, styles.billedTypo]}>Overdue</Text>
-            <Text style={[styles.text, styles.textText]}>₹{(partyDetails.totals?.['Overdue']?.outstanding_amount || 0).toFixed(2)}</Text>
-          </View>
-          <View style={[styles.rectangleGroup, styles.rectanglePosition]}>
-            <View style={[styles.groupInner, styles.groupPosition]} />
-            <Text style={[styles.unpaid, styles.billedTypo]}>Unpaid</Text>
-            <Text style={[styles.text1, styles.textText]}>₹{(partyDetails.totals?.['Unpaid']?.outstanding_amount || 0).toFixed(2)}</Text>
+    <ScrollView>
+      <View style={styles.cutomerdetailscreen}>
+        <View style={[styles.component4, styles.component4Layout]}>
+          <View style={[styles.component4Child, styles.component4Layout]} />
+          <View style={[styles.component4Item, styles.component4Layout]} />
+          <View style={[styles.arrowLeftParent, styles.timePosition]}>
+            <Text style={[styles.accountDetails, styles.textText]}>
+              20CUBE LOGISTICS PRIVATE LIMITED
+            </Text>
           </View>
         </View>
-      </View>
-      <View style={styles.groupView}>
-        <View style={[styles.rectangleContainer, styles.groupChildPosition1]}>
-          <View style={[styles.rectangleView, styles.groupChildPosition1]} />
-          <View style={[styles.groupChild1, styles.groupChildPosition1]} />
-          <View style={[styles.groupChild2, styles.groupChildPosition1]} />
-        </View>
-        <View style={[styles.groupWrapper, styles.groupWrapperPosition]}>
-          <View style={[styles.rectangleParent1, styles.borderPosition]}>
-            <View style={[styles.groupChild3, styles.groupChildPosition]} />
-            <Text style={[styles.billed, styles.billedTypo]}>Billed</Text>
-            <Text style={[styles.text2, styles.textText]}>₹{partyDetails.totals?.['Paid']?.base_grand_total.toFixed(2)}</Text>
-          </View>
-        </View>
-        <View style={[styles.groupFrame, styles.groupWrapperPosition]}>
-          <View style={[styles.rectangleParent1, styles.borderPosition]}>
-            <View style={[styles.groupChild4, styles.groupChildPosition]} />
-            <Text
-              style={[styles.unBilled, styles.billedTypo]}
-            >{`Un Billed `}</Text>
-            <Text style={[styles.text2, styles.textText]}>₹{(partyDetails.totals?.['Overdue']?.outstanding_amount || 0 + partyDetails.totals?.['Unpaid']?.outstanding_amount || 0).toFixed(2)}</Text>
-          </View>
-        </View>
-        <View style={[styles.groupWrapper1, styles.groupWrapperPosition]}>
-          <View style={[styles.rectangleParent1, styles.borderPosition]}>
-            <View style={[styles.groupChild5, styles.groupChildPosition]} />
-            <Text style={[styles.totalOs, styles.billedTypo]}>Total</Text>
-            <Text style={[styles.text2, styles.textText]}>₹{partyDetails.totals?.['Paid'].base_grand_total.toFixed(2) + (partyDetails.totals?.['Overdue']?.outstanding_amount || 0 + partyDetails.totals?.['Unpaid']?.outstanding_amount || 0).toFixed(2)}</Text>
-          </View>
-        </View>
-      </View>
-      <View style={styles.frameView}>
-        <View style={styles.frameParent}>
-          <View style={[styles.invoicesParent, styles.parentFlexBox]}>
-            <Text style={[styles.invoices, styles.invoicesTypo]}>Invoices</Text>
-            <Pressable
-              style={styles.activity}
-              onPress={() => {console.log("!@3")}}
-            >
-              <Text style={[styles.activity1, styles.invoicesTypo]}>
-                Activity
+        <View style={styles.groupParent}>
+          {partyDetails.totals?.["Unpaid"]?.outstanding_amount ||
+          partyDetails.totals?.["Overdue"]?.outstanding_amount ? (
+            <PieChart
+              widthAndHeight={100}
+              series={[
+                partyDetails.totals?.["Unpaid"]?.outstanding_amount || 0,
+                partyDetails.totals?.["Overdue"]?.outstanding_amount || 0,
+              ]}
+              sliceColor={["gray", "orange"]}
+              coverRadius={0.45}
+              coverFill={"#FFF"}
+            />
+          ) : null}
+          <View style={styles.groupContainer}>
+            <View style={[styles.rectangleParent, styles.rectanglePosition]}>
+              <View style={[styles.groupItem, styles.groupPosition]} />
+              <Text style={[styles.overdue, styles.billedTypo]}>Overdue</Text>
+              <Text style={[styles.text, styles.textText]}>
+                ₹
+                {(
+                  partyDetails.totals?.["Overdue"]?.outstanding_amount || 0
+                ).toFixed(2)}
               </Text>
-            </Pressable>
-            <Text style={[styles.shipments, styles.invoicesTypo]}>
-              Shipments
-            </Text>
-            <Text style={[styles.shipments, styles.invoicesTypo]}>
-              Contact Info
-            </Text>
+            </View>
+            <View style={[styles.rectangleGroup, styles.rectanglePosition]}>
+              <View style={[styles.groupInner, styles.groupPosition]} />
+              <Text style={[styles.unpaid, styles.billedTypo]}>Unpaid</Text>
+              <Text style={[styles.text1, styles.textText]}>
+                ₹
+                {(
+                  partyDetails.totals?.["Unpaid"]?.outstanding_amount || 0
+                ).toFixed(2)}
+              </Text>
+            </View>
           </View>
-          <Image
-            style={[styles.vectorIcon, styles.vectorIconPosition]}
-            contentFit="cover"
-            source={require("../../assets/vector-41.png")}
-          />
-          <Image
-            style={styles.groupChild6}
-            contentFit="cover"
-            source={require("../../assets/vector-41.png")}
-          />
-          <Image
-            style={[styles.groupChild7, styles.vectorIconPosition]}
-            contentFit="cover"
-            source={require("../../assets/vector-42.png")}
-          />
         </View>
-        <ScrollView>
-        {
-          (data || []).map((row,idx) => {
-            return  <View style={styles.depositBorder}>
-            <View style={styles.frameGroup}>
-              <View style={[styles.frameContainer, styles.frameLayout]}>
-                <View>
-                  <Text style={[styles.shcep23120010, styles.dueDateTypo]}>
-                    #{row.name}
-                  </Text>
-                  <View style={styles.frameParent1}>
-                    <View style={styles.wrapperBorder}>
-                      <Text style={[styles.overDue, styles.overDueTypo]}>
-                        {row.status}
-                      </Text>
+        <View style={styles.groupView}>
+          <View style={[styles.rectangleContainer, styles.groupChildPosition1]}>
+            <View style={[styles.rectangleView, styles.groupChildPosition1]} />
+            <View style={[styles.groupChild1, styles.groupChildPosition1]} />
+            <View style={[styles.groupChild2, styles.groupChildPosition1]} />
+          </View>
+          <View style={[styles.groupWrapper, styles.groupWrapperPosition]}>
+            <View style={[styles.rectangleParent1, styles.borderPosition]}>
+              <View style={[styles.groupChild3, styles.groupChildPosition]} />
+              <Text style={[styles.billed, styles.billedTypo]}>Billed</Text>
+              <Text style={[styles.text2, styles.textText]}>
+                ₹{partyDetails.totals?.["Paid"]?.base_grand_total.toFixed(2)}
+              </Text>
+            </View>
+          </View>
+          <View style={[styles.groupFrame, styles.groupWrapperPosition]}>
+            <View style={[styles.rectangleParent1, styles.borderPosition]}>
+              <View style={[styles.groupChild4, styles.groupChildPosition]} />
+              <Text
+                style={[styles.unBilled, styles.billedTypo]}
+              >{`Un Billed `}</Text>
+              <Text style={[styles.text2, styles.textText]}>
+                ₹
+                {(
+                  partyDetails.totals?.["Overdue"]?.outstanding_amount ||
+                  0 + partyDetails.totals?.["Unpaid"]?.outstanding_amount ||
+                  0
+                ).toFixed(2)}
+              </Text>
+            </View>
+          </View>
+          <View style={[styles.groupWrapper1, styles.groupWrapperPosition]}>
+            <View style={[styles.rectangleParent1, styles.borderPosition]}>
+              <View style={[styles.groupChild5, styles.groupChildPosition]} />
+              <Text style={[styles.totalOs, styles.billedTypo]}>Total</Text>
+              <Text style={[styles.text2, styles.textText]}>
+                ₹
+                {partyDetails.totals?.["Paid"].base_grand_total.toFixed(2) +
+                  (
+                    partyDetails.totals?.["Overdue"]?.outstanding_amount ||
+                    0 + partyDetails.totals?.["Unpaid"]?.outstanding_amount ||
+                    0
+                  ).toFixed(2)}
+              </Text>
+            </View>
+          </View>
+        </View>
+        <View style={styles.frameView}>
+          <View style={styles.frameParent}>
+            <View style={[styles.invoicesParent, styles.parentFlexBox]}>
+              <Text style={[styles.invoices, styles.invoicesTypo]}>
+                Invoices
+              </Text>
+              <Pressable
+                style={styles.activity}
+                onPress={() => {
+                  console.log("!@3");
+                }}
+              >
+                <Text style={[styles.activity1, styles.invoicesTypo]}>
+                  Activity
+                </Text>
+              </Pressable>
+              <Text style={[styles.shipments, styles.invoicesTypo]}>
+                Shipments
+              </Text>
+              <Text style={[styles.shipments, styles.invoicesTypo]}>
+                Contact Info
+              </Text>
+            </View>
+            <Image
+              style={[styles.vectorIcon, styles.vectorIconPosition]}
+              contentFit="cover"
+              source={require("../../assets/vector-41.png")}
+            />
+            <Image
+              style={styles.groupChild6}
+              contentFit="cover"
+              source={require("../../assets/vector-41.png")}
+            />
+            <Image
+              style={[styles.groupChild7, styles.vectorIconPosition]}
+              contentFit="cover"
+              source={require("../../assets/vector-42.png")}
+            />
+          </View>
+          <ScrollView>
+            {(data || []).map((row, idx) => {
+              return (
+                <View style={styles.depositBorder}>
+                  <View style={styles.frameGroup}>
+                    <View style={[styles.frameContainer, styles.frameLayout]}>
+                      <View>
+                        <Text
+                          style={[styles.shcep23120010, styles.dueDateTypo]}
+                        >
+                          #{row.name}
+                        </Text>
+                        <View style={styles.frameParent1}>
+                          <View style={styles.wrapperBorder}>
+                            <Text style={[styles.overDue, styles.overDueTypo]}>
+                              {row.status}
+                            </Text>
+                          </View>
+                          <View
+                            style={[
+                              styles.bomMumbaiWrapper,
+                              styles.wrapperBorder,
+                            ]}
+                          >
+                            <Text style={[styles.bomMumbai, styles.feb2023Clr]}>
+                              CC-CC
+                            </Text>
+                          </View>
+                        </View>
+                      </View>
+                      <Image
+                        style={styles.bgLayout}
+                        contentFit="cover"
+                        source={require("../../assets/frame-1171276717.png")}
+                      />
                     </View>
-                    <View
-                      style={[styles.bomMumbaiWrapper, styles.wrapperBorder]}
-                    >
-                      <Text style={[styles.bomMumbai, styles.feb2023Clr]}>
-                        CC-CC
-                      </Text>
+                    <View style={[styles.frameParent2, styles.frameLayout]}>
+                      <View>
+                        <Text style={[styles.feb2023, styles.feb2023Clr]}>
+                          {row.due_date}
+                        </Text>
+                        <Text style={[styles.dueDate, styles.dueDateTypo]}>
+                          Due Date
+                        </Text>
+                      </View>
+                      <View style={styles.parent}>
+                        <Text style={[styles.feb2023, styles.feb2023Clr]}>
+                          ₹ {row.outstanding_amount}
+                        </Text>
+                        <Text style={[styles.dueDate, styles.dueDateTypo]}>
+                          Amount
+                        </Text>
+                      </View>
                     </View>
                   </View>
                 </View>
-                <Image
-                  style={styles.bgLayout}
-                  contentFit="cover"
-                  source={require("../../assets/frame-1171276717.png")}
-                />
-              </View>
-              <View style={[styles.frameParent2, styles.frameLayout]}>
-                <View>
-                  <Text style={[styles.feb2023, styles.feb2023Clr]}>
-                    {row.due_date}
-                  </Text>
-                  <Text style={[styles.dueDate, styles.dueDateTypo]}>
-                    Due Date
-                  </Text>
-                </View>
-                <View style={styles.parent}>
-                  <Text style={[styles.feb2023, styles.feb2023Clr]}>
-                    ₹ {row.outstanding_amount}
-                  </Text>
-                  <Text style={[styles.dueDate, styles.dueDateTypo]}>
-                    Amount
-                  </Text>
-                </View>
-              </View>
-            </View>
-          </View>
-          }) 
-        }
-        </ScrollView>
-        <View style={styles.depositParent}>
-          
-          
+              );
+            })}
+          </ScrollView>
+          <View style={styles.depositParent}></View>
         </View>
       </View>
-    </View>
+    </ScrollView>
   );
 };
 
