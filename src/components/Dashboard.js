@@ -11,7 +11,7 @@ import {
 
 const Dashboard = () => {
   return (
-    <View style={styles.dashboard}>
+    <ScrollView style={styles.dashboard}>
       <View style={styles.frameParent}>
         <View style={styles.helloKaranWrapper}>
           <Text style={styles.helloKaranTypo}>Hello, Karan!</Text>
@@ -37,11 +37,6 @@ const Dashboard = () => {
           </View>
           <View style={[styles.button33, styles.button33FlexBox]}>
             <View style={styles.content}>
-              <Image
-                style={[styles.iconOutlinedSearch, styles.iconLayout]}
-                contentFit="cover"
-                source={require("../../assets/check.png")}
-              />
               <Text
                 style={[styles.viewPl, styles.viewPlTypo]}
               >{`View P&L`}</Text>
@@ -61,31 +56,6 @@ const Dashboard = () => {
           </View>
           <View style={styles.depositInner}>
             <View style={styles.ellipseParent}>
-              <Image
-                style={[styles.groupChild, styles.capIconLayout]}
-                contentFit="cover"
-                source={require("../../assets/check.png")}
-              />
-              <Image
-                style={[styles.groupChild, styles.capIconLayout]}
-                contentFit="cover"
-                source={require("../../assets/check.png")}
-              />
-              <Image
-                style={[styles.groupChild, styles.capIconLayout]}
-                contentFit="cover"
-                source={require("../../assets/check.png")}
-              />
-              <Image
-                style={[styles.groupChild, styles.capIconLayout]}
-                contentFit="cover"
-                source={require("../../assets/check.png")}
-              />
-              <Image
-                style={[styles.groupChild, styles.capIconLayout]}
-                contentFit="cover"
-                source={require("../../assets/check.png")}
-              />
               <Text style={[styles.text, styles.textPosition]}>
                 ₹7,92,46,000
               </Text>
@@ -249,11 +219,6 @@ const Dashboard = () => {
               <View style={styles.checkboxInput}>
                 <View style={[styles.bg, styles.iconLayout]} />
                 <View style={[styles.border1, styles.borderBorder]} />
-                <Image
-                  style={[styles.checkIcon, styles.iconPosition]}
-                  contentFit="cover"
-                  source={require("../../assets/check.png")}
-                />
               </View>
               <Text style={[styles.item01, styles.item01Typo]}>
                 Over Due(20)
@@ -441,12 +406,7 @@ const Dashboard = () => {
           </View>
         </View>
       </View>
-      <Image
-        style={[styles.component4Icon, styles.iconPosition]}
-        contentFit="cover"
-        source={require("../../assets/check.png")}
-      />
-    </View>
+    </ScrollView>
   );
 };
 
@@ -892,10 +852,10 @@ const styles = StyleSheet.create({
     marginLeft: 40,
   },
   frameParent: {
-    top: 87,
-    left: 20,
+    // top: 87,
+    // left: 20,
     alignItems: "center",
-    position: "absolute",
+    // position: "absolute",
   },
   component5Child: {
     top: "-2.08%",
@@ -1060,6 +1020,7 @@ const styles = StyleSheet.create({
   },
   dashboard: {
     flex: 1,
+    marginTop: 45,
     height: 1542,
     overflow: "hidden",
     width: "100%",
