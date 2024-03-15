@@ -1,4 +1,3 @@
-
 // import * as React from "react";
 import React, { useEffect, useState } from "react";
 import {
@@ -28,7 +27,7 @@ import ContactInfoTab from "./ContactInfoTab";
 const CutomerDetailScreen = ({ data, partyDetails }) => {
   console.log(">>> ", partyDetails);
   const navigation = useNavigation();
-  const [selectedTab, setSelectedTab] = useState('invoices');
+  const [selectedTab, setSelectedTab] = useState("invoices");
 
   const handleTabPress = (tab) => {
     setSelectedTab(tab);
@@ -48,7 +47,7 @@ const CutomerDetailScreen = ({ data, partyDetails }) => {
         </View>
         <View style={styles.groupParent}>
           {partyDetails.totals?.["Unpaid"]?.outstanding_amount ||
-            partyDetails.totals?.["Overdue"]?.outstanding_amount ? (
+          partyDetails.totals?.["Overdue"]?.outstanding_amount ? (
             <PieChart
               widthAndHeight={100}
               series={[
@@ -135,36 +134,56 @@ const CutomerDetailScreen = ({ data, partyDetails }) => {
             <View style={[styles.invoicesParent, styles.parentFlexBox]}>
               <Pressable
                 style={styles.tab}
-                onPress={() => handleTabPress('invoices')}
+                onPress={() => handleTabPress("invoices")}
               >
-                <Text style={[styles.tabText, selectedTab === 'invoices' && styles.selectedTab]}>
+                <Text
+                  style={[
+                    styles.tabText,
+                    selectedTab === "invoices" && styles.selectedTab,
+                  ]}
+                >
                   Invoices
                 </Text>
               </Pressable>
 
               <Pressable
                 style={styles.tab}
-                onPress={() => handleTabPress('activity')}
+                onPress={() => handleTabPress("activity")}
               >
-                <Text style={[styles.tabText, selectedTab === 'activity' && styles.selectedTab]}>
+                <Text
+                  style={[
+                    styles.tabText,
+                    selectedTab === "activity" && styles.selectedTab,
+                  ]}
+                >
                   Activity
                 </Text>
               </Pressable>
 
               <Pressable
                 style={styles.tab}
-                onPress={() => handleTabPress('shipments')}
+                onPress={() => handleTabPress("shipments")}
               >
-                <Text style={[styles.tabText, selectedTab === 'shipments' && styles.selectedTab]}>
+                <Text
+                  style={[
+                    styles.tabText,
+                    selectedTab === "shipments" && styles.selectedTab,
+                  ]}
+                >
                   Shipments
                 </Text>
               </Pressable>
 
               <Pressable
                 style={styles.tab}
-                onPress={() => handleTabPress('contact')}
+                onPress={() => handleTabPress("contact")}
               >
-                <Text style={[styles.tabText, selectedTab === 'contact' && styles.selectedTab]}>
+                <Text
+                  style={[
+                    styles.tabText,
+                    selectedTab === "contact" && styles.selectedTab,
+                  ]}
+                >
                   Contact Info
                 </Text>
               </Pressable>
@@ -186,10 +205,10 @@ const CutomerDetailScreen = ({ data, partyDetails }) => {
             />
           </View>
 
-          {selectedTab === 'invoices' && <InvoicesTab data={data} />}
-          {selectedTab === 'activity' && <ActivityTab />}
-          {selectedTab === 'shipments' && <ShipmentsTab />}
-          {selectedTab === 'contact' && <ContactInfoTab />}
+          {selectedTab === "invoices" && <InvoicesTab data={data} />}
+          {selectedTab === "activity" && <ActivityTab />}
+          {selectedTab === "shipments" && <ShipmentsTab />}
+          {selectedTab === "contact" && <ContactInfoTab />}
 
           <View style={styles.depositParent}></View>
         </View>
@@ -204,19 +223,19 @@ const styles = StyleSheet.create({
   // },
   tabText: {
     fontSize: 16,
-    color: '#333',
+    color: "#333",
   },
   selectedTab: {
-    textDecorationLine: 'underline',
-    textDecorationStyle: 'double',
-    textDecorationColor: 'black',
+    textDecorationLine: "underline",
+    textDecorationStyle: "double",
+    textDecorationColor: "black",
   },
   component4Layout: {
     width: "100%",
     right: "0%",
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
   },
   textTypo: {
     fontFamily: FontFamily.button2,
@@ -656,9 +675,9 @@ const styles = StyleSheet.create({
     left: 20,
     height: 24,
     position: "absolute",
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
   },
   vectorIcon: {
     left: 0,
@@ -678,7 +697,7 @@ const styles = StyleSheet.create({
   frameParent: {
     height: 41,
     width: 360,
-    width: '100%',
+    width: "100%",
     paddingHorizontal: 20,
   },
   bg: {
@@ -803,7 +822,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     position: "absolute",
     flex: 1,
-    justifyContent: 'center',
+    justifyContent: "center",
   },
   cutomerdetailscreen: {
     height: 984,
