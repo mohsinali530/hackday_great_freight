@@ -74,8 +74,8 @@ export default function App() {
   return (
     <NavigationContainer>
       <View style={styles.container}>
-        {/* <CutomerDetailScreen data={data} partyDetails={partyDetails} /> */}
-        <Dashboard />
+        <CutomerDetailScreen data={data} partyDetails={partyDetails} />
+        {/* <Dashboard /> */}
         <StatusBar style="auto" />
       </View>
     </NavigationContainer>
