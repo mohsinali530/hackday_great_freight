@@ -19,6 +19,7 @@ import Icon from "react-native-vector-icons/FontAwesome";
 const Dashboard = ({ data }) => {
   const [activeTab, setActiveTab] = useState("Home");
   console.log("data ", data);
+  console.log("inside Dashboard");
   return (
     <>
       <ScrollView style={styles.dashboard}>
@@ -226,64 +227,6 @@ const Dashboard = ({ data }) => {
           </View>
         </View>
       </ScrollView>
-      <View style={styles.tabBar}>
-        <TouchableOpacity
-          style={[
-            styles.tabItem,
-            activeTab === "Receivable" && styles.activeTab,
-          ]}
-          onPress={() => setActiveTab("Receivable")}
-        >
-          <Icon
-            name="plus"
-            size={30}
-            color={
-              activeTab == "Receivable" ? Color.colorRoyalblue_100 : "#123"
-            }
-          />
-          <Text
-            style={[
-              styles.tabText,
-              activeTab === "Receivable" && styles.activeTab,
-            ]}
-          >
-            Receivable
-          </Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={[styles.tabItem, activeTab === "Home" && styles.activeTab]}
-          onPress={() => setActiveTab("Home")}
-        >
-          <Icon
-            name="home"
-            size={30}
-            color={activeTab == "Home" ? Color.colorRoyalblue_100 : "#123"}
-          />
-          <Text
-            style={[styles.tabText, activeTab === "Home" && styles.activeTab]}
-          >
-            Home
-          </Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={[styles.tabItem, activeTab === "Payable" && styles.activeTab]}
-          onPress={() => setActiveTab("Payable")}
-        >
-          <Icon
-            name="minus"
-            size={30}
-            color={activeTab == "Payable" ? Color.colorRoyalblue_100 : "#123"}
-          />
-          <Text
-            style={[
-              styles.tabText,
-              activeTab === "Payable" && styles.activeTab,
-            ]}
-          >
-            Payable
-          </Text>
-        </TouchableOpacity>
-      </View>
     </>
   );
 };
@@ -897,13 +840,13 @@ const styles = StyleSheet.create({
     width: 360,
   },
   dashboard: {
-    flex: 1,
+    // flex: 1,
     marginTop: 45,
-    height: 1542,
-    overflow: "hidden",
-    width: "100%",
-    backgroundColor: Color.white,
-    marginBottom: 60,
+    // height: 1542,
+    // overflow: "hidden",
+    // width: "100%",
+    // backgroundColor: Color.white,
+    marginBottom: 70,
   },
   container: {
     flex: 1,

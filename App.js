@@ -1,5 +1,5 @@
 import { StatusBar } from "expo-status-bar";
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
 import FrappeFetch from "react-native-frappe-fetch";
 import React, { useEffect, useState } from "react";
 const get_party_details = "shipmnts.finance_mobile.get_party_details";
@@ -10,7 +10,12 @@ import CutomerDetailScreen from "./src/components/CutomerDetailScreen";
 import { NavigationContainer } from "@react-navigation/native";
 import Dashboard from "./src/components/Dashboard";
 import AllCustomers from "./src/components/AllCustomers";
-
+import { Color } from "./GlobalStyles";
+import Icon from "react-native-vector-icons/FontAwesome";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { useNavigation } from "@react-navigation/core";
+import NavBar from "./src/components/NavBar";
+const Stack = createNativeStackNavigator();
 export function erpNextAxiosCall1(props, next) {
   const { action, url, params } = props;
   console.log(url);
@@ -57,7 +62,7 @@ export default function App() {
   // const [shipmentsDetail, setShipmentsDetail] = useState({});
   // const [contectDetail, setContectDetail] = useState({});
   const [allCustomers, setAllCustomers] = useState({});
-
+  const [activeTab, setActiveTab] = useState("Home");
   useEffect(() => {
     const fetchData = () => {
       try {
@@ -120,8 +125,8 @@ export default function App() {
             action: "get",
             url: `https://penta-demo.acc.shipmnts.com/api/method/shipmnts.finance_mobile.get_party_details`,
             params: {
-              group_by: 'customer',
-              limit: 50
+              group_by: "customer",
+              limit: 50,
             },
           },
           (response) => {
@@ -129,7 +134,6 @@ export default function App() {
             // console.log('<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<', response.data.message)
           }
         );
-
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -140,9 +144,18 @@ export default function App() {
   return (
     <NavigationContainer>
       <View style={styles.container}>
+        <Stack.Navigator>
+          <Stack.Screen name="Dashboard" component={Dashboard} />
+          <Stack.Screen
+            name="CutomerDetailScreen"
+            component={CutomerDetailScreen}
+          />
+          <Stack.Screen name="AllCustomers" component={AllCustomers} />
+        </Stack.Navigator>
         {/* <CutomerDetailScreen /> */}
-        <Dashboard />
+        {/* <Dashboard /> */}
         {/* <AllCustomers allCustomers={allCustomers} /> */}
+        <NavBar allCustomers={allCustomers} />
         <StatusBar style="auto" />
       </View>
     </NavigationContainer>
@@ -168,5 +181,29 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
     alignItems: "center",
     justifyContent: "center",
+  },
+  tabBar: {
+    flexDirection: "row",
+    justifyContent: "space-around",
+    alignItems: "center",
+    backgroundColor: "#f0f0f0",
+    height: 60,
+    position: "absolute",
+    bottom: 0,
+    left: 0,
+    right: 0,
+    paddingBottom: 5,
+    paddingTop: 10,
+  },
+  tabItem: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  tabText: {
+    fontSize: 16,
+  },
+  activeTab: {
+    color: Color.colorRoyalblue_100,
   },
 });
