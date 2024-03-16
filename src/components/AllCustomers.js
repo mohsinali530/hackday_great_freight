@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Text, StyleSheet, View, Pressable, Dimensions, ScrollView } from "react-native";
+import { Text, StyleSheet, View, Pressable, Dimensions, ScrollView, TouchableOpacity } from "react-native";
 import {
     FontFamily,
     Color,
@@ -7,213 +7,186 @@ import {
     Border,
     Padding,
 } from "../../GlobalStyles";
+import { CheckBox } from "react-native-elements";
 
-const AllCustomers = () => {
+
+const AllCustomers = ({ allCustomers }) => {
+
+    console.log('====================================', allCustomers)
+
+    const [overDueData, setOverDueData] = React.useState([]);
+    const [paidData, setPaidData] = React.useState([]);
+    const [selectedData, setSelectedData] = React.useState([]);
+
+    // const allCustomers = [
+    //     {
+    //         name: 'Goldee Pvt Ltd',
+    //         status: 'Over Due',
+    //         statusNo: 19,
+    //         totalOsAmount: 20151183,
+    //         outstanding_amount: 750230
+    //     },
+    //     {
+    //         name: 'RLabs Pvt Ltd',
+    //         status: 'On Time',
+    //         statusNo: 12,
+    //         totalOsAmount: 20987465,
+    //         outstanding_amount: 750236480
+    //     },
+    //     {
+    //         name: 'Goldee Pvt Ltd',
+    //         status: 'Over Due',
+    //         statusNo: 19,
+    //         totalOsAmount: 20151183,
+    //         outstanding_amount: 750230
+    //     },
+    //     {
+    //         name: 'RLabs Pvt Ltd',
+    //         status: 'On Time',
+    //         statusNo: 12,
+    //         totalOsAmount: 209874653,
+    //         outstanding_amount: 750236480
+    //     },
+    // ]
+
+
+    React.useEffect(() => {
+        const overDue = [];
+        const paid = [];
+        for (const key in allCustomers.totals) {
+            const entry = allCustomers.totals[key];
+            if (entry.status == 'Paid') {
+                paid.push({
+                    name: entry.customer,
+                    outstandingAmount: entry.outstanding_amount,
+                    status: entry.status,
+                    totalOsAmount: entry.base_grand_total
+                });
+            } else if (entry.status == 'Overdue') {
+                overDue.push({
+                    name: entry.customer,
+                    outstandingAmount: entry.outstanding_amount,
+                    status: entry.status,
+                    totalOsAmount: entry.base_grand_total
+                });
+            }
+        }
+        const sortedOverDueData = overDue.sort((a, b) => b.outstandingAmount - a.outstandingAmount);
+        setOverDueData(sortedOverDueData);
+        setPaidData(paid);
+        setSelectedData(overDue);
+        console.log('-----> overDueData', overDueData);
+        console.log('-----> paidData', paidData);
+    }, [allCustomers])
+
+
+    const [isOuerDueChecked, setIsOuerDueChecked] = React.useState(true)
+    const [isOnTimeChecked, setIsOnTimeChecked] = React.useState(false)
+    const handleOuerDueChecked = () => {
+        if (!isOuerDueChecked && isOnTimeChecked) setSelectedData([...overDueData, ...paidData]);
+        else if (isOuerDueChecked && isOnTimeChecked) setSelectedData(paidData);
+        else if (!isOuerDueChecked && !isOnTimeChecked) setSelectedData(overDueData);
+        else if (isOuerDueChecked && !isOnTimeChecked) setSelectedData([]);
+        setIsOuerDueChecked(!isOuerDueChecked)
+    };
+    const handleOnTimeChecked = () => {
+        if (isOuerDueChecked && !isOnTimeChecked) setSelectedData([...overDueData, ...paidData]);
+        else if (!isOuerDueChecked && !isOnTimeChecked) setSelectedData(paidData);
+        else if (isOuerDueChecked && isOnTimeChecked) setSelectedData(overDueData);
+        else if (!isOuerDueChecked && isOnTimeChecked) setSelectedData([]);
+        setIsOnTimeChecked(!isOnTimeChecked)
+    };
 
     return (
         <>
-            <View style={styles.component4Parent}>
-                <View style={styles.component4}>
-                    <View style={[styles.component4Child, styles.component4Position]} />
-                    <View style={[styles.component4Item, styles.component4Position]} />
-                    <View style={[styles.arrowLeftParent, styles.timePosition]}>
-                        {/* <Image
+            <ScrollView style={styles.scrollView1}>
+                <View style={styles.component4Parent}>
+                    <View style={styles.component4}>
+                        <View style={[styles.component4Child, styles.component4Position]} />
+                        <View style={[styles.component4Item, styles.component4Position]} />
+                        <View style={[styles.arrowLeftParent, styles.timePosition]}>
+                            {/* <Image
                             style={[styles.arrowLeftIcon, styles.frameChildLayout]}
                             contentFit="cover"
                             source={require("../assets/arrowleft.png")}
                         /> */}
-                        <Text style={[styles.allCustomers, styles.item01Typo]}>
-                            All Customers
-                        </Text>
-                    </View>
-                </View>
-                <View style={styles.checkboxGroupParent}>
-                    <View style={styles.checkboxGroup}>
-                        <View style={styles.checkbox}>
-                            <View style={[styles.checkboxInput, styles.checkboxFlexBox]}>
-                                <View style={[styles.bg, styles.bgLayout]} />
-                                <View style={[styles.border1, styles.borderBorder]} />
-                                {/* <Image
-                                    style={[styles.checkIcon, styles.timePosition]}
-                                    contentFit="cover"
-                                    source={require("../assets/check.png")}
-                                /> */}
-                            </View>
-                            <Text style={[styles.item01, styles.item01Typo]}>
-                                Over Due(20)
-                            </Text>
-                        </View>
-                        <View style={styles.checkbox1}>
-                            <View style={[styles.checkboxInput1, styles.checkboxFlexBox]}>
-                                <View style={[styles.bg1, styles.bg1Border]} />
-                            </View>
-                            <Text style={[styles.item01, styles.item01Typo]}>
-                                On Time(10)
+
+                            <Text style={[styles.allCustomers, styles.item01Typo]}>
+                                All Customers
                             </Text>
                         </View>
                     </View>
-                    {/* <Image
-                        style={[styles.frameChild, styles.frameChildLayout]}
-                        contentFit="cover"
-                        source={require("../assets/frame-323.png")}
-                    /> */}
-                </View>
-                <View style={styles.customerCardParent}>
-                    <View style={styles.customerCardBorder}>
-                        <View style={styles.frameParent}>
-                            <View style={[styles.frameGroup, styles.frameLayout]}>
-                                <View>
-                                    <Text style={styles.goldeePvtLtd}>Goldee Pvt Ltd</Text>
-                                    <View style={styles.frameWrapper}>
-                                        <View style={[styles.overDue19Wrapper, styles.bg1Border]}>
-                                            <Text
-                                                style={[styles.overDue19, styles.overDue19Typo]}
-                                            >{`Over Due (19) `}</Text>
-                                        </View>
-                                    </View>
-                                </View>
-                                {/* <Image
-                                    style={styles.bgLayout}
-                                    contentFit="cover"
-                                    source={require("../assets/frame-1171276717.png")}
-                                /> */}
+                    <View style={styles.checkboxGroupParent}>
+                        <View style={styles.checkboxGroup}>
+                            <View>
+                                <CheckBox
+                                    title={`Over Due(${overDueData.length})`}
+                                    checked={isOuerDueChecked}
+                                    onPress={handleOuerDueChecked}
+                                />
                             </View>
-                            <View style={[styles.frameContainer, styles.frameLayout]}>
-                                <View>
-                                    <Text style={[styles.text, styles.timeTypo]}>
-                                        ₹ 2,01,51,183
-                                    </Text>
-                                    <Text style={[styles.totalOsAmount, styles.overDue19Typo]}>
-                                        Total O/S Amount
-                                    </Text>
-                                </View>
-                                <View style={styles.group}>
-                                    <Text style={[styles.text, styles.timeTypo]}>₹ 7,50,230</Text>
-                                    <Text style={[styles.totalOsAmount, styles.overDue19Typo]}>
-                                        Overdue Amount
-                                    </Text>
-                                </View>
+                            <View>
+                                <CheckBox
+                                    title={`On time(${paidData.length})`}
+                                    checked={isOnTimeChecked}
+                                    onPress={handleOnTimeChecked}
+                                />
                             </View>
                         </View>
                     </View>
-                    <View style={[styles.customerCard1, styles.customerCardBorder]}>
-                        <View style={styles.frameParent}>
-                            <View style={[styles.frameGroup, styles.frameLayout]}>
-                                <View>
-                                    <Text style={styles.goldeePvtLtd}>RLabs Pvt Ltd</Text>
-                                    <View style={styles.frameWrapper}>
-                                        <View style={[styles.overDue19Wrapper, styles.bg1Border]}>
-                                            <Text
-                                                style={[styles.overDue19, styles.overDue19Typo]}
-                                            >{`Over Due (12) `}</Text>
+                    <View style={styles.customerCardParent}>
+
+                        {
+                            selectedData.map((customer, index) => (
+                                <View style={[index != 0 && styles.customerCard1, styles.customerCardBorder]}>
+                                    <View style={styles.frameParent}>
+                                        <View style={[styles.frameGroup, styles.frameLayout]}>
+                                            <View>
+                                                <Text style={styles.goldeePvtLtd}>{customer.name}</Text>
+                                                <View style={styles.frameWrapper}>
+                                                    <View style={[styles.overDue19Wrapper, styles.bg1Border]}>
+                                                        <Text
+                                                            style={[styles.overDue19, customer.status == 'Paid' ? { color: 'green' } : { color: 'red' }, styles.overDue19Typo]}
+                                                        // >{`${customer.status} (${customer.statusNo}) `}</Text>
+                                                        >{`${customer.status}`}</Text>
+                                                    </View>
+                                                </View>
+                                            </View>
+                                        </View>
+                                        <View style={[styles.frameContainer, styles.frameLayout]}>
+                                            <View>
+                                                <Text style={[styles.text, styles.timeTypo]}>
+                                                    ₹ {customer.totalOsAmount.toLocaleString()}
+                                                </Text>
+                                                <Text style={[styles.totalOsAmount, styles.overDue19Typo]}>
+                                                    Total O/S Amount
+                                                </Text>
+                                            </View>
+                                            <View style={styles.group}>
+                                                <Text style={[styles.text, styles.timeTypo]}>₹ {customer.outstandingAmount.toLocaleString()}</Text>
+                                                <Text style={[styles.totalOsAmount, styles.overDue19Typo]}>
+                                                    Overdue Amount
+                                                </Text>
+                                            </View>
                                         </View>
                                     </View>
                                 </View>
-                                {/* <Image
-                                    style={styles.bgLayout}
-                                    contentFit="cover"
-                                    source={require("../assets/frame-1171276717.png")}
-                                /> */}
-                            </View>
-                            <View style={[styles.frameContainer, styles.frameLayout]}>
-                                <View>
-                                    <Text style={[styles.text, styles.timeTypo]}>
-                                        ₹ 1,18,11,030
-                                    </Text>
-                                    <Text style={[styles.totalOsAmount, styles.overDue19Typo]}>
-                                        Total O/S Amount
-                                    </Text>
-                                </View>
-                                <View style={styles.group}>
-                                    <Text style={[styles.text, styles.timeTypo]}>₹ 2,47,020</Text>
-                                    <Text style={[styles.totalOsAmount, styles.overDue19Typo]}>
-                                        Overdue Amount
-                                    </Text>
-                                </View>
-                            </View>
-                        </View>
-                    </View>
-                    <View style={[styles.customerCard1, styles.customerCardBorder]}>
-                        <View style={styles.frameParent}>
-                            <View style={[styles.frameGroup, styles.frameLayout]}>
-                                <View>
-                                    <Text style={styles.goldeePvtLtd}>Exco Tradings</Text>
-                                    <View style={styles.frameWrapper}>
-                                        <View style={[styles.overDue19Wrapper, styles.bg1Border]}>
-                                            <Text
-                                                style={[styles.overDue19, styles.overDue19Typo]}
-                                            >{`Over Due (9) `}</Text>
-                                        </View>
-                                    </View>
-                                </View>
-                                {/* <Image
-                                    style={styles.bgLayout}
-                                    contentFit="cover"
-                                    source={require("../assets/frame-1171276717.png")}
-                                /> */}
-                            </View>
-                            <View style={[styles.frameContainer, styles.frameLayout]}>
-                                <View>
-                                    <Text style={[styles.text, styles.timeTypo]}>
-                                        ₹ 93,14,357
-                                    </Text>
-                                    <Text style={[styles.totalOsAmount, styles.overDue19Typo]}>
-                                        Total O/S Amount
-                                    </Text>
-                                </View>
-                                <View style={styles.group}>
-                                    <Text style={[styles.text, styles.timeTypo]}>₹ 2,30,290</Text>
-                                    <Text style={[styles.totalOsAmount, styles.overDue19Typo]}>
-                                        Overdue Amount
-                                    </Text>
-                                </View>
-                            </View>
-                        </View>
-                    </View>
-                    <View style={[styles.customerCard1, styles.customerCardBorder]}>
-                        <View style={styles.frameParent}>
-                            <View style={[styles.frameGroup, styles.frameLayout]}>
-                                <View>
-                                    <Text style={styles.goldeePvtLtd}>Falcon Pvt Ltd</Text>
-                                    <View style={styles.frameWrapper}>
-                                        <View style={[styles.overDue19Wrapper, styles.bg1Border]}>
-                                            <Text
-                                                style={[styles.overDue19, styles.overDue19Typo]}
-                                            >{`Over Due (8) `}</Text>
-                                        </View>
-                                    </View>
-                                </View>
-                                {/* <Image
-                                    style={styles.bgLayout}
-                                    contentFit="cover"
-                                    source={require("../assets/frame-1171276717.png")}
-                                /> */}
-                            </View>
-                            <View style={[styles.frameContainer, styles.frameLayout]}>
-                                <View>
-                                    <Text style={[styles.text, styles.timeTypo]}>
-                                        ₹ 78,67,036
-                                    </Text>
-                                    <Text style={[styles.totalOsAmount, styles.overDue19Typo]}>
-                                        Total O/S Amount
-                                    </Text>
-                                </View>
-                                <View style={styles.group}>
-                                    <Text style={[styles.text, styles.timeTypo]}>₹ 1,98,928</Text>
-                                    <Text style={[styles.totalOsAmount, styles.overDue19Typo]}>
-                                        Overdue Amount
-                                    </Text>
-                                </View>
-                            </View>
-                        </View>
+                            ))
+                        }
                     </View>
                 </View>
-            </View>
+            </ScrollView>
         </>
     )
 }
 
 const styles = StyleSheet.create({
+    scrollView1: {
+        // position: 'absolute',
+        // top: 0,
+        // left: 0,
+        // backgroundColor: Color.grey,
+    },
     timeTypo: {
         textAlign: "left",
         fontFamily: FontFamily.bodyBold,
@@ -461,12 +434,12 @@ const styles = StyleSheet.create({
     checkboxGroupParent: {
         marginTop: 16,
         justifyContent: "space-between",
-        width: 320,
+        width: '320',
         flexDirection: "row",
         alignItems: "center",
     },
     goldeePvtLtd: {
-        color: Color.colorRoyalblue,
+        color: Color.colorRoyalblue_100,
         fontFamily: FontFamily.bodySmall,
         fontWeight: "500",
         fontSize: FontSize.header2_size,
@@ -474,7 +447,7 @@ const styles = StyleSheet.create({
     },
     overDue19: {
         lineHeight: 16,
-        color: Color.colorTomato,
+        color: 'red',
     },
     overDue19Wrapper: {
         paddingHorizontal: Padding.p_5xs,
@@ -515,10 +488,9 @@ const styles = StyleSheet.create({
         marginTop: 16,
     },
     component4Parent: {
-        top: 30,
-        left: 0,
         alignItems: "center",
-        position: "absolute",
+        // position: "absolute",
+        marginTop: 45,
     },
     cutomerlistscreen: {
         borderRadius: 10,

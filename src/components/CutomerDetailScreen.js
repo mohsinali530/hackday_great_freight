@@ -25,9 +25,10 @@ import ActivityTab from "./ActivityTab";
 import ShipmentsTab from "./ShipmentsTab";
 import ContactInfoTab from "./ContactInfoTab";
 
-const CutomerDetailScreen = ({ data, partyDetails }) => {
-  console.log(">>> ", partyDetails);
-  const navigation = useNavigation();
+const CutomerDetailScreen = ({ data, partyDetails, shipmentsDetail, contectDetail }) => {
+  console.log('<<<<<<<<<<<<<<<<<<<<<<<<<<<', data);
+  console.log(">>>>>>>>>>>>>>>>>>>> ", partyDetails);
+  console.log("------------------------------- ", shipmentsDetail);
   const [selectedTab, setSelectedTab] = useState('invoices');
 
   const handleTabPress = (tab) => {
@@ -73,7 +74,7 @@ const CutomerDetailScreen = ({ data, partyDetails }) => {
             </View>
             <View style={[styles.rectangleGroup, styles.rectanglePosition]}>
               <View style={[styles.groupInner, styles.groupPosition]} />
-              <Text style={[styles.unpaid, styles.billedTypo]}>Unpaid</Text>
+              <Text style={[styles.unpaid, styles.billedTypo]}>Unpaid1</Text>
               <Text style={[styles.text1, styles.textText]}>
                 ₹
                 {(
@@ -810,6 +811,7 @@ const styles = StyleSheet.create({
     overflow: "hidden",
     width: 360,
     backgroundColor: Color.neutral1,
+    position: "absolute",
   },
 });
 
