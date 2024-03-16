@@ -16,8 +16,9 @@ import {
 } from "../../GlobalStyles";
 import { useState } from "react";
 import Icon from "react-native-vector-icons/FontAwesome";
-const Dashboard = () => {
+const Dashboard = ({ data }) => {
   const [activeTab, setActiveTab] = useState("Home");
+  console.log("data ", data);
   return (
     <>
       <ScrollView style={styles.dashboard}>
@@ -224,215 +225,6 @@ const Dashboard = () => {
             </View>
           </View>
         </View>
-        <View style={styles.component5Parent}>
-          <View style={styles.component5}>
-            <View style={[styles.component5Child, styles.statusBarPosition]} />
-            <View style={[styles.component5Item, styles.component5Position]} />
-            <View style={[styles.component5Inner, styles.component5Position]} />
-            <View style={styles.arrowLeftParent}>
-              <Image
-                style={[styles.arrowLeftIcon3, styles.frameChildLayout]}
-                contentFit="cover"
-                source={require("../../assets/arrowleft.png")}
-              />
-              <Text style={[styles.allCustomers, styles.helloKaranTypo]}>
-                All Customers
-              </Text>
-            </View>
-          </View>
-          <View style={[styles.checkboxGroupParent, styles.parentFlexBox]}>
-            <View style={styles.checkboxGroup}>
-              <View style={styles.content}>
-                <View style={styles.checkboxInput}>
-                  <View style={[styles.bg, styles.iconLayout]} />
-                  <View style={[styles.border1, styles.borderBorder]} />
-                </View>
-                <Text style={[styles.item01, styles.item01Typo]}>
-                  Over Due(20)
-                </Text>
-              </View>
-              <View style={styles.checkbox1}>
-                <View style={styles.checkboxInput1}>
-                  <View style={[styles.bg1, styles.bg1Border]} />
-                </View>
-                <Text style={[styles.item01, styles.item01Typo]}>
-                  On Time(10)
-                </Text>
-              </View>
-            </View>
-            <Image
-              style={[styles.frameChild, styles.frameChildLayout]}
-              contentFit="cover"
-              source={require("../../assets/frame-323.png")}
-            />
-          </View>
-          <View style={styles.frameView}>
-            <View style={styles.customerCardBorder}>
-              <View style={styles.frameParent5}>
-                <View style={[styles.frameParent6, styles.parentFlexBox]}>
-                  <View>
-                    <Text style={[styles.goldeePvtLtd1, styles.overDue19Typo]}>
-                      Goldee Pvt Ltd
-                    </Text>
-                    <View style={styles.frameWrapper}>
-                      <View style={[styles.overDue19Wrapper, styles.bg1Border]}>
-                        <Text
-                          style={[styles.overDue19, styles.viewPlTypo]}
-                        >{`Over Due (19) `}</Text>
-                      </View>
-                    </View>
-                  </View>
-                  <Image
-                    style={styles.iconLayout}
-                    contentFit="cover"
-                    source={require("../../assets/frame-1171276717.png")}
-                  />
-                </View>
-                <View style={styles.frameParent7}>
-                  <View>
-                    <Text style={[styles.text10, styles.textTypo]}>
-                      ₹ 2,01,51,183
-                    </Text>
-                    <Text style={[styles.totalOsAmount, styles.overDue19Typo]}>
-                      Total O/S Amount
-                    </Text>
-                  </View>
-                  <View style={styles.group}>
-                    <Text style={[styles.text10, styles.textTypo]}>
-                      ₹ 7,50,230
-                    </Text>
-                    <Text style={[styles.totalOsAmount, styles.overDue19Typo]}>
-                      Overdue Amount
-                    </Text>
-                  </View>
-                </View>
-              </View>
-            </View>
-            <View style={[styles.customerCard1, styles.customerCardBorder]}>
-              <View style={styles.frameParent5}>
-                <View style={[styles.frameParent6, styles.parentFlexBox]}>
-                  <View>
-                    <Text style={[styles.goldeePvtLtd1, styles.overDue19Typo]}>
-                      RLabs Pvt Ltd
-                    </Text>
-                    <View style={styles.frameWrapper}>
-                      <View style={[styles.overDue19Wrapper, styles.bg1Border]}>
-                        <Text
-                          style={[styles.overDue19, styles.viewPlTypo]}
-                        >{`Over Due (12) `}</Text>
-                      </View>
-                    </View>
-                  </View>
-                  <Image
-                    style={styles.iconLayout}
-                    contentFit="cover"
-                    source={require("../../assets/frame-1171276717.png")}
-                  />
-                </View>
-                <View style={styles.frameParent7}>
-                  <View>
-                    <Text style={[styles.text10, styles.textTypo]}>
-                      ₹ 1,18,11,030
-                    </Text>
-                    <Text style={[styles.totalOsAmount, styles.overDue19Typo]}>
-                      Total O/S Amount
-                    </Text>
-                  </View>
-                  <View style={styles.group}>
-                    <Text style={[styles.text10, styles.textTypo]}>
-                      ₹ 2,47,020
-                    </Text>
-                    <Text style={[styles.totalOsAmount, styles.overDue19Typo]}>
-                      Overdue Amount
-                    </Text>
-                  </View>
-                </View>
-              </View>
-            </View>
-            <View style={[styles.customerCard1, styles.customerCardBorder]}>
-              <View style={styles.frameParent5}>
-                <View style={[styles.frameParent6, styles.parentFlexBox]}>
-                  <View>
-                    <Text style={[styles.goldeePvtLtd1, styles.overDue19Typo]}>
-                      Exco Tradings
-                    </Text>
-                    <View style={styles.frameWrapper}>
-                      <View style={[styles.overDue19Wrapper, styles.bg1Border]}>
-                        <Text
-                          style={[styles.overDue19, styles.viewPlTypo]}
-                        >{`Over Due (9) `}</Text>
-                      </View>
-                    </View>
-                  </View>
-                  <Image
-                    style={styles.iconLayout}
-                    contentFit="cover"
-                    source={require("../../assets/frame-1171276717.png")}
-                  />
-                </View>
-                <View style={styles.frameParent7}>
-                  <View>
-                    <Text style={[styles.text10, styles.textTypo]}>
-                      ₹ 93,14,357
-                    </Text>
-                    <Text style={[styles.totalOsAmount, styles.overDue19Typo]}>
-                      Total O/S Amount
-                    </Text>
-                  </View>
-                  <View style={styles.group}>
-                    <Text style={[styles.text10, styles.textTypo]}>
-                      ₹ 2,30,290
-                    </Text>
-                    <Text style={[styles.totalOsAmount, styles.overDue19Typo]}>
-                      Overdue Amount
-                    </Text>
-                  </View>
-                </View>
-              </View>
-            </View>
-            <View style={[styles.customerCard1, styles.customerCardBorder]}>
-              <View style={styles.frameParent5}>
-                <View style={[styles.frameParent6, styles.parentFlexBox]}>
-                  <View>
-                    <Text style={[styles.goldeePvtLtd1, styles.overDue19Typo]}>
-                      Falcon Pvt Ltd
-                    </Text>
-                    <View style={styles.frameWrapper}>
-                      <View style={[styles.overDue19Wrapper, styles.bg1Border]}>
-                        <Text
-                          style={[styles.overDue19, styles.viewPlTypo]}
-                        >{`Over Due (8) `}</Text>
-                      </View>
-                    </View>
-                  </View>
-                  <Image
-                    style={styles.iconLayout}
-                    contentFit="cover"
-                    source={require("../../assets/frame-1171276717.png")}
-                  />
-                </View>
-                <View style={styles.frameParent7}>
-                  <View>
-                    <Text style={[styles.text10, styles.textTypo]}>
-                      ₹ 78,67,036
-                    </Text>
-                    <Text style={[styles.totalOsAmount, styles.overDue19Typo]}>
-                      Total O/S Amount
-                    </Text>
-                  </View>
-                  <View style={styles.group}>
-                    <Text style={[styles.text10, styles.textTypo]}>
-                      ₹ 1,98,928
-                    </Text>
-                    <Text style={[styles.totalOsAmount, styles.overDue19Typo]}>
-                      Overdue Amount
-                    </Text>
-                  </View>
-                </View>
-              </View>
-            </View>
-          </View>
-        </View>
       </ScrollView>
       <View style={styles.tabBar}>
         <TouchableOpacity
@@ -443,7 +235,7 @@ const Dashboard = () => {
           onPress={() => setActiveTab("Receivable")}
         >
           <Icon
-            name="chevron-circle-down"
+            name="plus"
             size={30}
             color={
               activeTab == "Receivable" ? Color.colorRoyalblue_100 : "#123"
@@ -478,7 +270,7 @@ const Dashboard = () => {
           onPress={() => setActiveTab("Payable")}
         >
           <Icon
-            name="chevron-circle-up"
+            name="minus"
             size={30}
             color={activeTab == "Payable" ? Color.colorRoyalblue_100 : "#123"}
           />
