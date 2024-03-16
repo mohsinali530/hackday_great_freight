@@ -23,12 +23,88 @@ import InvoicesTab from "./InvoicesTab";
 import ActivityTab from "./ActivityTab";
 import ShipmentsTab from "./ShipmentsTab";
 import ContactInfoTab from "./ContactInfoTab";
+import { erpNextAxiosCall1, erpNextAxiosCall2 } from "../../App";
 
-const CutomerDetailScreen = ({ data, partyDetails, shipmentsDetail, contectDetail }) => {
-  console.log('<<<<<<<<<<<<<<<<<<<<<<<<<<<', data);
-  console.log(">>>>>>>>>>>>>>>>>>>> ", partyDetails);
-  console.log("------------------------------- ", shipmentsDetail);
+const get_party_details = "shipmnts.finance_mobile.get_party_details";
+const get_party_wise_invoices =
+  "shipmnts.finance_mobile.get_party_wise_invoices";
+const URL1 = 'https://jetfreight.acc.shipmnts.com'
+const URL2 = 'https://penta-demo.acc.shipmnts.com'
+
+const CutomerDetailScreen = () => {
+
   const [selectedTab, setSelectedTab] = useState('invoices');
+  const [data, setData] = useState([]);
+  const [partyDetails, setPartyDetails] = useState({});
+  const [shipmentsDetail, setShipmentsDetail] = useState([]);
+  const [contectDetail, setContectDetail] = useState([]);
+  const party = "20CUBE LOGISTICS PRIVATE LIMITED";
+  const party2 = "VEEWIN LOGISTICS";
+
+  useEffect(() => {
+    const fetchData = () => {
+      try {
+        erpNextAxiosCall1(
+          {
+            action: "get",
+            url: `${URL1}/api/method/${get_party_wise_invoices}`,
+            params: {
+              party: party,
+              party_type: "customer",
+              status: JSON.stringify(["Overdue", "Unpaid"]),
+            },
+          },
+          (response) => {
+            setData(response.data.message);
+            console.log('------------------------- Data', response.data.message);
+          }
+        );
+        erpNextAxiosCall1(
+          {
+            action: "get",
+            url: `${URL1}/api/method/${get_party_details}`,
+            params: {
+              party: party,
+              party_type: "customer",
+            },
+          },
+          (response) => {
+            setPartyDetails(response.data.message);
+            console.log('=================================== setPartyDetails', response.data.message);
+          }
+        );
+        erpNextAxiosCall2(
+          {
+            action: "get",
+            url: `${URL2}/api/method/shipmnts.finance_mobile.get_customer_shipments`,
+            params: {
+              customer: party2,
+            },
+          },
+          (response) => {
+            setShipmentsDetail(response.data.message);
+            console.log('<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< setShipmentsDetail', response.data.message);
+          }
+        );
+        erpNextAxiosCall2(
+          {
+            action: "get",
+            url: `${URL2}/api/method/shipmnts.finance_mobile.get_party_contacts_info`,
+            params: {
+              party: 'GEODIS INDIA PRIVATE LIMITED',
+            },
+          },
+          (response) => {
+            setContectDetail(response.data.message);
+            console.log('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> setContectDetail', response.data.message);
+          }
+        );
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+    fetchData();
+  }, []);
 
   const handleTabPress = (tab) => {
     setSelectedTab(tab);
@@ -208,8 +284,8 @@ const CutomerDetailScreen = ({ data, partyDetails, shipmentsDetail, contectDetai
 
           {selectedTab === "invoices" && <InvoicesTab data={data} />}
           {selectedTab === "activity" && <ActivityTab />}
-          {selectedTab === "shipments" && <ShipmentsTab />}
-          {selectedTab === "contact" && <ContactInfoTab />}
+          {selectedTab === "shipments" && <ShipmentsTab shipmentsDetail={shipmentsDetail} />}
+          {selectedTab === "contact" && <ContactInfoTab contectDetail={contectDetail} />}
 
           <View style={styles.depositParent}></View>
         </View>
@@ -830,7 +906,6 @@ const styles = StyleSheet.create({
     overflow: "hidden",
     width: 360,
     backgroundColor: Color.neutral1,
-    position: "absolute",
   },
 });
 
