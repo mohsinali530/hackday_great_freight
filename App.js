@@ -11,7 +11,27 @@ import { NavigationContainer } from "@react-navigation/native";
 import Dashboard from "./src/components/Dashboard";
 import AllCustomers from "./src/components/AllCustomers";
 
-export function erpNextAxiosCall(props, next) {
+export function erpNextAxiosCall1(props, next) {
+  const { action, url, params } = props;
+  console.log(url);
+  axios
+    .get(url, {
+      headers: {
+        "Content-Type": "application/json",
+        "X-Frappe-Site-Name": "jetfreight.acc.shipmnts.com",
+        Authorization: "Basic NzkwMzJmMDE3YzkzYzRhOmVlNzAzZDVkMGQ0MjkwYQ==",
+      },
+      params: { ...params },
+    })
+    .then((response) => {
+      next(response);
+    })
+    .catch((error) => {
+      console.log("E -> ", error);
+    });
+}
+
+export function erpNextAxiosCall2(props, next) {
   const { action, url, params } = props;
   console.log(url);
   axios
@@ -32,10 +52,10 @@ export function erpNextAxiosCall(props, next) {
 }
 
 export default function App() {
-  const [data, setData] = useState([]);
-  const [partyDetails, setPartyDetails] = useState({});
-  const [shipmentsDetail, setShipmentsDetail] = useState({});
-  const [contectDetail, setContectDetail] = useState({});
+  // const [data, setData] = useState([]);
+  // const [partyDetails, setPartyDetails] = useState({});
+  // const [shipmentsDetail, setShipmentsDetail] = useState({});
+  // const [contectDetail, setContectDetail] = useState({});
   const [allCustomers, setAllCustomers] = useState({});
 
   useEffect(() => {
@@ -44,7 +64,7 @@ export default function App() {
         // erpNextAxiosCall(
         //   {
         //     action: "get",
-        //     url: `https://jetfreight.acc.shipmnts.com/api/method/${get_party_wise_invoices}`,
+        //     url: `https://penta-demo.acc.shipmnts.com/api/method/${get_party_wise_invoices}`,
         //     params: {
         //       party: "20CUBE LOGISTICS PRIVATE LIMITED",
         //       party_type: "customer",
@@ -59,7 +79,7 @@ export default function App() {
         // erpNextAxiosCall(
         //   {
         //     action: "get",
-        //     url: `https://jetfreight.acc.shipmnts.com/api/method/${get_party_details}`,
+        //     url: `https://penta-demo.acc.shipmnts.com/api/method/${get_party_details}`,
         //     params: {
         //       party: "20CUBE LOGISTICS PRIVATE LIMITED",
         //       party_type: "customer",
@@ -95,7 +115,7 @@ export default function App() {
         //   }
         // );
 
-        erpNextAxiosCall(
+        erpNextAxiosCall2(
           {
             action: "get",
             url: `https://penta-demo.acc.shipmnts.com/api/method/shipmnts.finance_mobile.get_party_details`,
@@ -120,9 +140,9 @@ export default function App() {
   return (
     <NavigationContainer>
       <View style={styles.container}>
-        {/* <CutomerDetailScreen data={data} partyDetails={partyDetails} shipmentsDetail={shipmentsDetail} contectDetail={contectDetail} /> */}
-        {/* <Dashboard /> */}
-        <AllCustomers allCustomers={allCustomers} />
+        {/* <CutomerDetailScreen /> */}
+        <Dashboard />
+        {/* <AllCustomers allCustomers={allCustomers} /> */}
         <StatusBar style="auto" />
       </View>
     </NavigationContainer>
