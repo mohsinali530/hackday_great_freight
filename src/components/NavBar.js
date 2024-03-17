@@ -24,7 +24,7 @@ export default function NavBar({ allCustomers }) {
   const renderScreen = () => {
     switch (activeTab) {
       case "Home":
-        return <Dashboard />;
+        return <Dashboard allCustomers={allCustomers} />;
       case "Receivable":
         return <CutomerDetailScreen />;
       default:
