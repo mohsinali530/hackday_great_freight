@@ -2,7 +2,7 @@
 export const FontFamily = {
   bodyTiny: "Inter-Medium",
   button2: "Inter-SemiBold",
-  header2: "Inter-Regular",
+  // header2: "Inter-Regular",
   header21: "Roboto-Medium",
   header3: "Roboto-Regular",
   header4: "Roboto-Bold",
