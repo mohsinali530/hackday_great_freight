@@ -100,7 +100,7 @@ const AllCustomers = ({ allCustomers }) => {
 
                         {
                             selectedData.map((customer, index) => (
-                                <View style={[index != 0 && styles.customerCard1, styles.customerCardBorder]}>
+                                <View style={[styles.customerCard1, styles.customerCardBorder]}>
                                     <View style={styles.frameParent}>
                                         <View style={[styles.frameGroup, styles.frameLayout]}>
                                             <View>
@@ -110,7 +110,7 @@ const AllCustomers = ({ allCustomers }) => {
                                                         <Text
                                                             style={[styles.overDue19, customer.status == 'Paid' ? { color: 'green' } : { color: 'red' }, styles.overDue19Typo]}
                                                         // >{`${customer.status} (${customer.statusNo}) `}</Text>
-                                                        >{`${customer.status}`}</Text>
+                                                        >{`${customer.status} (12)`}</Text>
                                                     </View>
                                                 </View>
                                             </View>

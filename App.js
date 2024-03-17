@@ -140,8 +140,8 @@ export default function App() {
   return (
     <NavigationContainer>
       <View style={styles.container}>
-        {/* <CutomerDetailScreen /> */}
-        <Dashboard />
+        <CutomerDetailScreen />
+        {/* <Dashboard /> */}
         {/* <AllCustomers allCustomers={allCustomers} /> */}
         <StatusBar style="auto" />
       </View>
