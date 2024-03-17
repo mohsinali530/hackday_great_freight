@@ -104,6 +104,9 @@ const ContactInfoTab = ({ contectDetail }) => {
 };
 
 const styles = StyleSheet.create({
+    customerCard1: {
+        marginTop: 12,
+    },
     statusBarPosition: {
         left: "0%",
         position: "absolute",
