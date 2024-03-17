@@ -16,10 +16,64 @@ import {
 } from "../../GlobalStyles";
 import { useState } from "react";
 import Icon from "react-native-vector-icons/FontAwesome";
-const Dashboard = ({ data }) => {
+import { useNavigation } from "@react-navigation/native";
+const Dashboard = ({ allCustomers }) => {
   const [activeTab, setActiveTab] = useState("Home");
-  console.log("data ", data);
+  const navigation = useNavigation();
+  console.log("data1 ", allCustomers);
   console.log("inside Dashboard");
+  const [totalOS, setTotalOS] = useState(0);
+  const [topData, setTopData] = useState([]);
+  const [otherOS, setotherOS] = useState([0]);
+
+  React.useEffect(() => {
+    if (allCustomers) {
+      const data = [];
+      let total = 0;
+      for (const key in allCustomers?.totals) {
+        const entry = allCustomers?.totals[key];
+        total += entry.base_grand_total
+        data.push({
+          name: entry.customer,
+          outstandingAmount: entry.outstanding_amount,
+          status: entry.status,
+          totalOsAmount: entry.base_grand_total
+        });
+      }
+      setTotalOS(total);
+      const sortedOverDueData = data.sort((a, b) => b.totalOsAmount - a.totalOsAmount);
+      const numberOfElementsToPick = Math.min(4, sortedOverDueData.length);
+      const finalData = sortedOverDueData.slice(0, numberOfElementsToPick);
+      setTopData(finalData);
+      let otherdata = 0;
+      finalData.map(data => otherdata += data.totalOsAmount)
+      setotherOS(total - otherdata)
+      console.log('-----> overDueData', sortedOverDueData);
+      console.log('-----> paidData', numberOfElementsToPick);
+      console.log('-----> total', total);
+    }
+  }, [allCustomers])
+
+  // const handleClick = () => {
+  //   navigation.navigate('CutomerDetailScreen')
+  //   console.log('View clicked!');
+  // };
+
+  const styleColor = (ind) => {
+    switch (ind) {
+      case 0:
+        return styles.groupChild4
+      case 1:
+        return styles.groupChild6
+      case 2:
+        return styles.groupChild8
+      case 3:
+        return styles.groupChild10
+      default:
+        return styles.groupChild2
+    }
+  }
+
   return (
     <>
       <ScrollView style={styles.dashboard}>
@@ -72,89 +126,41 @@ const Dashboard = ({ data }) => {
             <View style={styles.depositInner}>
               <View style={styles.ellipseParent}>
                 <Text style={[styles.text, styles.textPosition]}>
-                  ₹7,92,46,000
+                  ₹ {totalOS.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
                 </Text>
                 <Text style={[styles.totalOs, styles.paidTypo]}>Total O/S</Text>
               </View>
             </View>
             <View style={styles.frameGroup}>
-              <View>
-                <View style={[styles.goldeePvtLtdParent, styles.parentFlexBox]}>
-                  <Text style={[styles.goldeePvtLtd, styles.paidTypo]}>
-                    Goldee Pvt Ltd
-                  </Text>
-                  <Text style={[styles.text1, styles.textTypo]}>
-                    ₹2,01,51,183
-                  </Text>
-                </View>
-                <View style={styles.rectangleParent}>
-                  <View
-                    style={[styles.rectangleView, styles.groupChildPosition1]}
-                  />
-                  <View style={styles.groupChild2} />
-                </View>
-              </View>
-              <View style={styles.frameView}>
-                <View style={[styles.goldeePvtLtdParent, styles.parentFlexBox]}>
-                  <Text style={[styles.goldeePvtLtd, styles.paidTypo]}>
-                    RLabs Pvt Ltd
-                  </Text>
-                  <Text style={[styles.text1, styles.textTypo]}>
-                    ₹1,18,11,030
-                  </Text>
-                </View>
-                <View style={styles.rectangleParent}>
-                  <View
-                    style={[styles.rectangleView, styles.groupChildPosition1]}
-                  />
-                  <View
-                    style={[styles.groupChild4, styles.groupChildPosition1]}
-                  />
-                </View>
-              </View>
-              <View style={styles.frameView}>
-                <View style={[styles.goldeePvtLtdParent, styles.parentFlexBox]}>
-                  <Text style={[styles.goldeePvtLtd, styles.paidTypo]}>
-                    Exco Tradings
-                  </Text>
-                  <Text style={[styles.text1, styles.textTypo]}>
-                    ₹93,14,357
-                  </Text>
-                </View>
-                <View style={styles.rectangleParent}>
-                  <View
-                    style={[styles.rectangleView, styles.groupChildPosition1]}
-                  />
-                  <View
-                    style={[styles.groupChild6, styles.groupChildPosition1]}
-                  />
-                </View>
-              </View>
-              <View style={styles.frameView}>
-                <View style={[styles.goldeePvtLtdParent, styles.parentFlexBox]}>
-                  <Text style={[styles.goldeePvtLtd, styles.paidTypo]}>
-                    Falcon Pvt Ltd
-                  </Text>
-                  <Text style={[styles.text1, styles.textTypo]}>
-                    ₹78,67,036
-                  </Text>
-                </View>
-                <View style={styles.rectangleParent}>
-                  <View
-                    style={[styles.rectangleView, styles.groupChildPosition1]}
-                  />
-                  <View
-                    style={[styles.groupChild8, styles.groupChildPosition1]}
-                  />
-                </View>
-              </View>
+              {
+                topData.map((data, index) =>
+                  <View style={index != 0 && styles.frameView}>
+                    <View style={[styles.goldeePvtLtdParent, styles.parentFlexBox]}>
+                      <Text style={[styles.goldeePvtLtd, styles.paidTypo]}>
+                        {data.name}
+                      </Text>
+                      <Text style={[styles.text1, styles.textTypo]}>
+                        ₹{data.totalOsAmount.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                      </Text>
+                    </View>
+                    <View style={styles.rectangleParent}>
+                      <View
+                        style={[styles.rectangleView, styles.groupChildPosition1]}
+                      />
+                      <View
+                        style={[styleColor(index), styles.groupChildPosition1]}
+                      />
+                    </View>
+                  </View>
+                )
+              }
               <View style={styles.frameView}>
                 <View style={[styles.goldeePvtLtdParent, styles.parentFlexBox]}>
                   <Text style={[styles.goldeePvtLtd, styles.paidTypo]}>
                     Others
                   </Text>
                   <Text style={[styles.text5, styles.textTypo]}>
-                    ₹3,306,039
+                    ₹{otherOS.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
                   </Text>
                 </View>
                 <View style={styles.rectangleParent}>
@@ -162,7 +168,7 @@ const Dashboard = ({ data }) => {
                     style={[styles.rectangleView, styles.groupChildPosition1]}
                   />
                   <View
-                    style={[styles.groupChild10, styles.groupChildPosition1]}
+                    style={[styles.groupChild2, styles.groupChildPosition1]}
                   />
                 </View>
               </View>

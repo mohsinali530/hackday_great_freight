@@ -66,60 +66,6 @@ export default function App() {
   useEffect(() => {
     const fetchData = () => {
       try {
-        // erpNextAxiosCall(
-        //   {
-        //     action: "get",
-        //     url: `https://penta-demo.acc.shipmnts.com/api/method/${get_party_wise_invoices}`,
-        //     params: {
-        //       party: "20CUBE LOGISTICS PRIVATE LIMITED",
-        //       party_type: "customer",
-        //       status: JSON.stringify(["Overdue", "Unpaid"]),
-        //     },
-        //   },
-        //   (response) => {
-        //     setData(response.data.message);
-        //   }
-        // );
-
-        // erpNextAxiosCall(
-        //   {
-        //     action: "get",
-        //     url: `https://penta-demo.acc.shipmnts.com/api/method/${get_party_details}`,
-        //     params: {
-        //       party: "20CUBE LOGISTICS PRIVATE LIMITED",
-        //       party_type: "customer",
-        //     },
-        //   },
-        //   (response) => {
-        //     setPartyDetails(response.data.message);
-        //   }
-        // );
-
-        // erpNextAxiosCall(
-        //   {
-        //     action: "get",
-        //     url: `https://penta-demo.acc.shipmnts.com/api/method/.finance_mobile.get_customer_shipments`,
-        //     params: {
-        //       customer: "VEEWIN LOGISTICS",
-        //     },
-        //   },
-        //   (response) => {
-        //     setShipmentsDetail(response.data.message);
-        //   }
-        // );
-        // erpNextAxiosCall(
-        //   {
-        //     action: "get",
-        //     url: `https://penta-demo.acc.shipmnts.com/api/method/shipmnts.finance_mobile/get_party_contacts_info`,
-        //     params: {
-        //       party: "VEEWIN LOGISTICS",
-        //     },
-        //   },
-        //   (response) => {
-        //     setContectDetail(response.data.message);
-        //   }
-        // );
-
         erpNextAxiosCall2(
           {
             action: "get",
@@ -143,37 +89,24 @@ export default function App() {
   }, []);
   return (
     <NavigationContainer>
-      <View style={styles.container}>
-        <Stack.Navigator>
-          <Stack.Screen name="Dashboard" component={Dashboard} />
-          <Stack.Screen
-            name="CutomerDetailScreen"
-            component={CutomerDetailScreen}
-          />
-          <Stack.Screen name="AllCustomers" component={AllCustomers} />
-        </Stack.Navigator>
-        {/* <CutomerDetailScreen /> */}
-        {/* <Dashboard /> */}
-        {/* <AllCustomers allCustomers={allCustomers} /> */}
-        <NavBar allCustomers={allCustomers} />
-        <StatusBar style="auto" />
-      </View>
+      {/* <View style={styles.container}> */}
+      <Stack.Navigator>
+        <Stack.Screen name="Dashboard" component={Dashboard} />
+        <Stack.Screen
+          name="CutomerDetailScreen"
+          component={CutomerDetailScreen}
+        />
+        <Stack.Screen name="AllCustomers" component={AllCustomers} />
+      </Stack.Navigator>
+      {/* <CutomerDetailScreen /> */}
+      {/* <Dashboard /> */}
+      {/* <AllCustomers allCustomers={allCustomers} /> */}
+      <NavBar allCustomers={allCustomers} />
+      {/* <StatusBar style="auto" /> */}
+      {/* </View> */}
     </NavigationContainer>
   );
 }
-
-// axios.get('http://192.168.1.224:8000/api/method/shipmnts.controllers.network_company.get_company/',{
-//   'headers':{
-//     'Content-Type': 'application/json',
-//     'X-Frappe-Site-Name': 'development',
-//     'Authorization': 'Basic NzkwMzJmMDE3YzkzYzRhOmU1YmMyNGE3OTJiMTVlNA=='
-//   },
-//   params: {
-//     company_name: "QWRqwrq"
-//   }
-// }).then(res => {
-//   console.log(">>>>>>>>>>>>> ",res)
-// }).catch(err => console.log(err))
 
 const styles = StyleSheet.create({
   container: {
